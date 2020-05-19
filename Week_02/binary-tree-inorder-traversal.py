@@ -8,11 +8,15 @@ class TreeNode:
 class Solution:
     def inorderTraversal(self, root: TreeNode) -> List[int]:
         res = []
-        def helper(node):
+        stack = [(root, 'white')]
+        while stack:
+            node, clolor = stack.pop()
             if not node:
-                return
-            helper(node.left)
-            res.append(node.val)
-            helper(node.right)
-        helper(root)
+                continue
+            if clolor == 'white':
+                stack.append((node.right, 'white'))
+                stack.append((node, 'gray'))
+                stack.append((node.left, 'white'))
+            else:
+                res.append(node.val)
         return res

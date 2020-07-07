@@ -1,18 +1,14 @@
 class Solution:
     def nthUglyNumber(self, n: int) -> int:
-        if n==0:
-            return
-        if n==1:
-            return 1
-        nums = [1]
-        i,j,k=0,0,0
-        for h in range(n-1):
-            temp = min(2*nums[i],3*nums[j],5*nums[k])
-            if temp == 2*nums[i]:
-                i+=1
-            if temp == 3*nums[j]:
-                j+=1
-            if temp == 5*nums[k]:
-                k+=1
-            nums.append(temp)
-        return nums[-1]
+        dp = [0] * (n + 1)
+        dp[1] = 1
+        i, j, k = 1, 1, 1
+        for m in range(2, n + 1):
+            dp[m] = min(dp[i] * 2, dp[j] * 3, dp[k] * 5)
+            if dp[m] == dp[i] * 2:
+                i += 1
+            if dp[m] == dp[j] * 3:
+                j += 1
+            if dp[m] == dp[k] * 5:
+                k += 1
+        return dp[-1]
